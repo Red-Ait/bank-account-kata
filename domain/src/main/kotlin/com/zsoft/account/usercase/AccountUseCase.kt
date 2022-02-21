@@ -1,6 +1,7 @@
 package com.zsoft.account.usercase
 
 import com.zsoft.account.entities.Account
+import com.zsoft.account.entities.Operation
 import com.zsoft.account.exceptions.NotFoundAccountException
 import com.zsoft.account.services.AccountService
 import java.math.BigDecimal
@@ -23,8 +24,8 @@ class AccountUseCase(private val accountService: AccountService) {
             } ?: throw NotFoundAccountException("Account not found : $account")
     }
 
-    fun getAccountStatement(iban: String): Account {
-        return this.accountService.findAccountByIban(iban)
+    fun getAccountStatement(iban: String): Collection<Operation> {
+        return this.accountService.findAccountByIban(iban)?.operations
             ?: throw NotFoundAccountException("No account with iban : $iban was found")
     }
 }
